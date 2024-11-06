@@ -3,9 +3,13 @@ import Todo from './Todo'
 
 export default function Todos({ todos, setTodos }) {
     return (
-        <div>
+        <div className='todos'>
             {todos && todos.map(todo => (
-                <Todo todos={todos} setTodos={setTodos} key={todo.id} todo={todo} />)
+                <Todo 
+                todos={todos} 
+                setTodos={setTodos} 
+                key={todo.id} 
+                todo={todo} />)
             )}
         </div>
     )

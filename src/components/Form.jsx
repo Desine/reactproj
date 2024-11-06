@@ -17,7 +17,9 @@ export default function Form({todos, setTodos}) {
 
             setValue('')
             setTodos([...todos, newTodo ])
+            return
         }
+        alert("Write text of todo")
     }
 
     return (
