@@ -12,15 +12,18 @@ export default function Main() {
     { id: 4, title: "Todo #4", completed: false },
     { id: 5, title: "Todo #5", completed: true },
   ]);
-
-  const [editTodo, setEditTodo] = useState(null)
-  console.log(editTodo)
+  const [editTodo, setEditTodo] = useState(null);
 
   return (
     <div className="container">
       <div className="box">
         <Header />
-        <Form todos={todos} setTodos={setTodos} editTodo={editTodo} setEditTodo={setEditTodo}/>
+        <Form
+          todos={todos}
+          setTodos={setTodos}
+          editTodo={editTodo}
+          setEditTodo={setEditTodo}
+        />
         <Todos todos={todos} setTodos={setTodos} setEditTodo={setEditTodo} />
         <Footer todos={todos} />
       </div>

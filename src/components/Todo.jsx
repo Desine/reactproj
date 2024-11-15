@@ -1,40 +1,61 @@
-import React from "react";
+import React, { useState } from "react";
+import { IonIcon } from "@ionic/react";
+import { trashOutline, createOutline } from "ionicons/icons";
 
-export default function Todo({ todo, setTodos, todos }) {
+export default function Todo({ todos, setTodos, todo, setEditTodo }) {
+  const [hover, setHover] = useState(null)
+
   function completeTodo(todo) {
-    let newTodos = todos.map(task => {
+    let newTodos = todos.map((task) => {
       if (task.id === todo.id) {
-        return { ...task, completed: !todo.completed }
+        return { ...task, completed: !todo.completed };
       }
-      return task
-    })
-    setTodos(newTodos)
+      return task;
+    });
+    setTodos(newTodos);
   }
 
   function deleteTodo(todo) {
-    let confirm = window.confirm(`Sure want to remove todo №${todo.id}?`)
+    let confirmation = window.confirm(
+      `Подтвердите удаление задачи №${todo.id}`
+    );
 
-    if (confirm) {
-      let newTodos = todos.filter(task => task.id !== todo.id)
-      setTodos(newTodos)
+    if (confirmation) {
+      let newTodos = todos.filter((task) => task.id !== todo.id);
+      setTodos(newTodos);
     }
   }
+  console.log(hover);
 
   return (
-    <div className="todo">
-      <div className={todo.completed ? 'completed' : ''}>
+    <div
+      className="todo"
+      onMouseEnter={() => setHover(todo.id)}
+      onMouseLeave={() => setHover(null)}
+    >
+      <div className={todo.completed ? "completed" : ""}>
         <input
           type="checkbox"
           checked={todo.completed}
           className="checkbox"
-          onChange={() => completeTodo(todo)} />
-        <label htmlFor={`check-${todo.id}`}>{todo.title}</label>
-        <i className="icon" width='30' height='30' src='https://img.icons8.com/?size=30&id=99933&format=png&color=000000' />
+          onChange={() => completeTodo(todo)}
+        />
+        <label htmlFor={`check-${todo.id}`}>
+          {todo.title.length < 30 ? todo.title : todo.title.slice(0, 30) + '...'}
+        </label>
       </div>
-      <div className="buttons">
-        <button className="button delete" onClick={() => deleteTodo(todo)}>Delete</button>
-        <button className="button delete">Edit</button>
-      </div>
+      {
+        hover === todo.id ? (
+          <div className="buttons">
+            <button className="button delete" onClick={() => deleteTodo(todo)}>
+              <IonIcon icon={trashOutline} size="medium" />
+            </button>
+            <button className="button edit" onClick={() => setEditTodo(todo)}>
+              <IonIcon icon={createOutline} size="medium" />
+            </button>
+          </div>
+        ) : null
+      }
     </div>
   );
 }
