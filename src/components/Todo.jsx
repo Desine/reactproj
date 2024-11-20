@@ -25,7 +25,6 @@ export default function Todo({ todos, setTodos, todo, setEditTodo }) {
       setTodos(newTodos);
     }
   }
-  console.log(hover);
 
   return (
     <div
