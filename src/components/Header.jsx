@@ -5,14 +5,21 @@ export default function Header() {
   const [time, setTime] = useState("day");
   const date = new Date();
   let hours = date.getHours();
+  let month = date.getMonth();
 
   useEffect(() => {
-    if (hours > 19 || hours < 7) {
-      setTime("night");
-    } else {
-      setTime("day");
-    }
-  }, [hours]);
+
+    let season
+    if(month === 12 || month === 1 || month === 2) season = 'winter'
+    if(month === 3 || month === 4 || month === 5) season = 'spring'
+    if(month === 6 || month === 7 || month === 8) season = 'summer'
+    if(month === 9 || month === 10 || month === 11) season = 'autumn'
+
+    let dayPart = (hours > 19 || hours < 7) ? "night" : "day"
+
+    setTime(season + '-' + dayPart)
+
+  }, [hours, month]);
 
   return (
     <div className={`header ${time}`}>
