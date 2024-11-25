@@ -1,69 +1,86 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 #root {
-    display: flex;
+  display: flex;
 
-    > div {
-        width: 100%;
-    }
+  > div {
+    width: 100%;
+  }
 }
 
 .navbar {
+  display: flex;
+
+  ul {
+    margin-left: auto;
     display: flex;
+    list-style: none;
 
-    ul {
-        margin-left: auto;
-        display: flex;
-        list-style: none;
-
-        li {
-            padding: 10px;
-        }
+    li {
+      padding: 10px;
     }
+  }
 }
 
-.selected-nav{
-    background: lightcoral;
+.selected-nav {
+  background: lightcoral;
 }
 
 .news {
-    display: grid;
-    justify-items: center;
+  display: grid;
+  justify-items: center;
 
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 10px;
-    padding: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  padding: 10px;
 }
 
 .newsObject {
-    max-width: 400px;
-    border: 3px solid lightgreen;
-    border-radius: 20px;
-    padding: 10px;
+  max-width: 400px;
+  border: 3px solid lightgreen;
+  border-radius: 20px;
+  padding: 10px;
 
-    &:hover{
-        transform: scale(115%);
-        transition-duration: 0.2s;
-        transition-timing-function: ease-out;
-        background: white;
-    }
+  &:hover {
+    transform: scale(115%);
+    transition-duration: 0.2s;
+    transition-timing-function: ease-out;
+    background: white;
+  }
 }
 
+.openedNews {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(250, 246, 204);
+  padding: 20px;
+}
+.openedNewsObject {
+  border-bottom: 5px solid black;
+  margin-bottom: 100px;
+  width: 70%;
 
+  img{
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 20px;
+  }
+}
 
 footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+  position: absolute;
+  width: 100%;
 
-    background: lightskyblue;
-    color: blueviolet;
+  background: lightskyblue;
+  color: blueviolet;
 
-    p {
-        text-wrap: nowrap;
-        overflow: hidden;
-    }
+  p {
+    text-wrap: nowrap;
+    overflow: hidden;
+  }
 }

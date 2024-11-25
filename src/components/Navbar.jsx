@@ -8,7 +8,7 @@ export default function Navbar({setSelected_category, selected_category}) {
   function mark_category(){
     const lis = document.querySelectorAll('li')
     lis.forEach(li => {
-      if(li.textContent === selected_category || li.textContent == "All" & selected_category == null){
+      if(li.textContent === selected_category || li.textContent === "All" & selected_category == null){
         li.classList.add("selected-nav")
       } else{
         li.classList.remove("selected-nav")
@@ -25,7 +25,7 @@ export default function Navbar({setSelected_category, selected_category}) {
       <ul>
         <li onClick={() => setSelected_category(null)}>All</li>
 
-        {news.map((NewsObject) => (
+        {news.map(NewsObject => (
           <li onClick={(event) => setSelected_category(event.target.textContent)}>
             {NewsObject.category}
           </li>
