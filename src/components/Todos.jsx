@@ -1,20 +1,31 @@
 import React from "react";
 import Todo from "./Todo";
+import axios from "axios";
 
-export default function Todos({ todos, setTodos, setEditTodo, todosArray }) {
+export default function Todos({
+  todos,
+  setTodos,
+  setEditTodo,
+  todosArray,
+  onChange,
+}) {
   function filterTodos(e) {
-    switch (e.target.textContent) {
-      case "Завершенные":
-        todosArray = todosArray.filter((todo) => todo.completed);
-        break;
-      case "Открытые":
-        todosArray = todosArray.filter((todo) => !todo.completed);
-        break;
-      default:
-        break;
-    }
+    let status = e.target.textContent;
 
-    setTodos(todosArray);
+    const statuses = {
+      Все: "all",
+      Завершенные: "completed",
+      Открытые: "open",
+    };
+
+    axios
+      .get("http://127.0.0.1:8000/todo", {
+        params: {
+          type: statuses[status],
+        },
+      })
+      .then((response) => setTodos(response.data))
+      .catch((error) => console.log(error));
   }
 
   return (
@@ -35,6 +46,7 @@ export default function Todos({ todos, setTodos, setEditTodo, todosArray }) {
               key={todo.id}
               todo={todo}
               setEditTodo={setEditTodo}
+              onChange={onChange}
             />
           ))}
       </div>
