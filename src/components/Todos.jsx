@@ -19,7 +19,7 @@ export default function Todos({
     };
 
     axios
-      .get("http://127.0.0.1:8000/todo", {
+      .get("http://localhost:8000/todo", {
         params: {
           type: statuses[status],
         },
