@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Modal from "./Modal";
 
 export default function Form({
   todos,
@@ -10,10 +11,39 @@ export default function Form({
   allTodos,
 }) {
   const [value, setValue] = useState("");
+  const [isModelOpen, setIsModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [handler, setHandler] = useState();
 
   useEffect(() => {
     editTodo ? setValue(editTodo.title) : setValue("");
   }, [editTodo]);
+
+  function selectHandler(e) {
+    openModal(
+      `Are you sure you want to: ${
+        e.target.value === "delete_all" ? "delete" : "complete"
+      } all todos?`
+    );
+    setHandler(e.target.value);
+  }
+
+  const onChangeHandler = () => {
+    axios
+      .post("http://localhost:8000/todo/" + handler)
+      .then(() => {
+        onChange();
+        closeModal();
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const openModal = (title) => {
+    setModalTitle(title);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => setIsModalOpen(false);
 
   async function addTodo(e) {
     e.preventDefault();
@@ -48,27 +78,15 @@ export default function Form({
     setEditTodo(null);
   }
 
-  function selectHandler(e) {
-    switch (e.target.value) {
-      case "deleteAll":
-        axios
-          .post("http://localhost:8000/todo/delete_all")
-          .then(() => onChange())
-          .catch((error) => console.error(error));
-        break;
-      case "completeAll":
-        axios
-          .post("http://localhost:8000/todo/complete_all")
-          .then(() => onChange())
-          .catch((error) => console.error(error));
-        break;
-      default:
-        break;
-    }
-  }
-
   return (
     <div className="form-container">
+      {isModelOpen && (
+        <Modal
+          title={modalTitle}
+          onConfirm={onChangeHandler}
+          closeModal={closeModal}
+        />
+      )}
       <form
         className="form"
         onSubmit={(e) => (editTodo ? handleEditTodo(e) : addTodo(e))}
@@ -84,10 +102,10 @@ export default function Form({
         <select name="" id="" onChange={(e) => selectHandler(e)}>
           <option value="">для всех</option>
           {allTodos.length ? (
-            <option value="deleteAll">Удалить все</option>
+            <option value="delete_all">Удалить все</option>
           ) : null}
           {allTodos && allTodos.find((todo) => !todo.completed) ? (
-            <option value="completeAll">Завершить все</option>
+            <option value="complete_all">Завершить все</option>
           ) : null}
         </select>
       ) : null}
